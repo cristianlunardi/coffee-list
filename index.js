@@ -64,6 +64,27 @@ app.get('/coffee/:name', (req, res) => {
     return res.status(200).json(coffee);
 });
 
+app.put('/coffee/:name', (req, res) => {
+
+    if (!req.body.price) {
+        return res.status(400).json({ "error": "Invalid request body!"});
+    }
+
+    const { name } = req.params;
+    const { price } = req.body;
+
+    const coffeeIndex = dataBase[0].coffee.findIndex(c => c.name.toLowerCase() === name.toLowerCase());
+
+    if (coffeeIndex === -1) {
+        return res.status(404).json({ error: "Coffee not found" });
+    }
+
+    let oldPrice = dataBase[0].coffee[coffeeIndex].price;
+    let newPrice = dataBase[0].coffee[coffeeIndex].price = price;
+
+    return res.status(200).json({"oldPrice": oldPrice, "newPrice": newPrice, "coffee": dataBase[0].coffee[coffeeIndex]});
+});
+
 // Start the Express server and listen for incoming requests on the specified port
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
