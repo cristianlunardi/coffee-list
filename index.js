@@ -49,6 +49,10 @@ app.post('/coffee', (req, res) => {
     return res.status(200).json({ message: 'Success on creating a new type of coffee!' });
 });
 
+app.get('/coffee', (req, res) => {
+    return res.status(200).json(dataBase[0].coffee);
+});
+
 // Start the Express server and listen for incoming requests on the specified port
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
