@@ -53,6 +53,17 @@ app.get('/coffee', (req, res) => {
     return res.status(200).json(dataBase[0].coffee);
 });
 
+app.get('/coffee/:name', (req, res) => {
+    const { name } = req.params;
+    const coffee = dataBase[0].coffee.find(c => c.name.toLowerCase() === name.toLowerCase());
+
+    if (!coffee) {
+        return res.status(404).json({ error: 'Coffee not found' });
+    }
+
+    return res.status(200).json(coffee);
+});
+
 // Start the Express server and listen for incoming requests on the specified port
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
