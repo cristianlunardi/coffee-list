@@ -85,6 +85,17 @@ app.put('/coffee/:name', (req, res) => {
     return res.status(200).json({"oldPrice": oldPrice, "newPrice": newPrice, "coffee": dataBase[0].coffee[coffeeIndex]});
 });
 
+app.delete('/coffee/:name', (req, res) => {
+    const { name } = req.params;
+    const coffeeIndex = dataBase[0].coffee.findIndex(c => c.name.toLowerCase() === name.toLowerCase());
+
+    if (coffeeIndex === -1) {
+        return res.status(404).json({ error: "Coffee not found" });
+    }
+
+    return res.status(200).json(dataBase[0].coffee);
+});
+
 // Start the Express server and listen for incoming requests on the specified port
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
