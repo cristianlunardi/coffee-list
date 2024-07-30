@@ -44,12 +44,16 @@ app.use((req, res, next) => {
     return next();
 });
 
-app.post('/coffee', (req, res) => {
-    let { name, price, description } = req.body;
-
-    if (!name || !price || !description) {
-        return res.status(400).json({ error: 'Missing required filds'});
+const checkFields = (req, res, next) => {
+    if (!req.body.name || !req.body.price || !req.body.description) {
+        return res.status(400).json({ error: 'Missing required fields'});
     };
+ 
+    return next();
+};
+
+app.post('/coffee', checkFields, (req, res) => {
+    let { name, price, description } = req.body;
 
     let newCoffee = { name, price, description };
     dataBase[0].coffee.push(newCoffee);
