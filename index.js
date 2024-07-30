@@ -36,6 +36,14 @@ let dataBase = [
  * - Request body: { "username": "johndoe", "email": "johndoe@example.com" }
  */
 
+// Middleware to log incoming requests to the console
+app.use((req, res, next) => {
+    console.log(`URL Call: ${req.url}`);
+    console.log(`Request method: ${req.method}`);
+
+    return next();
+});
+
 app.post('/coffee', (req, res) => {
     let { name, price, description } = req.body;
 
