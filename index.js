@@ -101,6 +101,8 @@ app.delete('/coffee/:name', (req, res) => {
         return res.status(404).json({ error: "Coffee not found" });
     }
 
+    dataBase[0].coffee.splice(coffeeIndex);
+
     return res.status(200).json(dataBase[0].coffee);
 });
 
